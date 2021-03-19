@@ -7,34 +7,17 @@ from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from plotly.graph_objs import Bar, Pie
 import joblib
 from sqlalchemy import create_engine
 
 
 app = Flask(__name__)
 
-def tokenize(text):
-    """
-    tokenize text from user
-    """
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    #tokenize and clean words in text
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
-
-# load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
-df = pd.read_sql_table('dataframe', engine)
+engine = create_engine('sqlite:///../data/graphdata.db')
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+model = joblib.load("../training/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -49,20 +32,20 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
     
     #get a tag for each of the classes and count of those tags
-    tag_names = df.columns.tolist()[4:]
-    tag_counts = df.sum().tolist()[4:]
-    # create visuals
     # TODO: Below is an example - modify to create your own visuals
+    #load in data from sql database
+    pre_existing = pd.read_sql("pre_existing",con = engine)
+    genders = pd.read_sql("genders",con = engine)
+    diabetes = pd.read_sql("diabetes",con = engine)
+    body_types = pd.read_sql("body_types",con = engine)
     graphs = [
         {
             'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
+                Pie(
+                    labels= pre_existing["pre_existing"],
+                    values = pre_existing["id"]
                 )
             ],
 

@@ -17,9 +17,9 @@ def build_pipeline():
     #transform functions to make the pipeline work
     one_hot_encode_transformed = FunctionTransformer(one_hot_encode)
     impute_transformed = FunctionTransformer(impute)
-    add_bodytype_transformed = FunctionTransformer(add_bodytype)
-    add_diabetes_transformed = FunctionTransformer(add_diabetes)
-
+    add_bodytype_transformed = FunctionTransformer(add_bodytype,kw_args= {"add_col":True})
+    add_diabetes_transformed = FunctionTransformer(add_diabetes,kw_args = {"add_col" : True})
+   
     pipeline = Pipeline([
     
     ("add_bodytype",add_bodytype_transformed),
@@ -27,15 +27,15 @@ def build_pipeline():
     ("impute",impute_transformed),
     ("one_hot_encode",one_hot_encode_transformed),
     #use all available threads
-    ("pred",XGBClassifier(nthread = -1))
+    ("pred",XGBClassifier(nthread = -1,verbosity = None))
     ])
-
+    
     #set up parameters to test
     parameters = {
         'pred__n_estimators': [50, 100, 200],
         'pred__learning_rate': [0.01,0.1,0.3],
-        'add_bodytype__add_col' : [True,False],
-        'add_diabetes__add_col' : [True,False]
+        'add_bodytype__kw_args' : [{"add_col":True},{"add_col":False}],
+        'add_diabetes__kw_args' : [{"add_col":True},{"add_col":False}]
     }
     cv = GridSearchCV(pipeline, param_grid=parameters)
 
@@ -83,6 +83,7 @@ def main(database_filepath,model_filepath):
     all necessary functions
     """
     X_train, X_test, y_train, y_test = load_data(database_filepath)
+    print(X_train.shape,y_train.shape)
     
     print('Building model...')
     model = build_pipeline()

@@ -18,7 +18,7 @@ def load_data(data_path,test_size = 0.1,random_state = 42):
         y_test (pd.DataFrame) : testing target
     """
     
-    stroke_data = pd.read(data_path)
+    stroke_data = pd.read_csv(data_path,index_col = "id")
 
     y = stroke_data["stroke"]
     
@@ -55,9 +55,9 @@ def add_diabetes(df,add_col = True):
     if add_col:
         stroke_data = df.copy()
         stroke_data["is_user_diabetic"] =  stroke_data["avg_glucose_level"].apply(is_user_diabetic)
-        
         return stroke_data
     #if we dont want to add the col return the same def
+    
     return df
 
 def bmi_to_bodytype(bmi):
@@ -103,8 +103,6 @@ def add_bodytype(df, add_col = True):
         #apply function
 
         stroke_data["body_type"] =  imputed_cols["bmi"].apply(bmi_to_bodytype)
-
-        
         return stroke_data
     #if we dont want to add the col the same df
     return df
@@ -125,10 +123,15 @@ def impute(df):
     imputer = SimpleImputer()
 
     imputed_cols = imputer.fit_transform(num_cols)
-    imputed_cols = pd.DataFrame(data = imputed_cols,columns = num_cols.columns)
+    imputed_cols = pd.DataFrame(data = imputed_cols,columns = num_cols.columns,index = num_cols.index)
+ 
+ 
     #drop numeric columns
     stroke_data.drop(columns = num_cols_names, axis = 1, inplace = True)
-    stroke_data = pd.concat([stroke_data,imputed_cols], axis = 1)
+    
+    stroke_data = pd.concat([stroke_data,imputed_cols],axis = 1)
+    
+    
     return stroke_data
 
 def one_hot_encode(df):
@@ -141,6 +144,7 @@ def one_hot_encode(df):
     """
     # extract categorical columns
     stroke_data = df.copy()
+    
     cat_cols = stroke_data.select_dtypes(include = ["object"])
     cat_cols_names = cat_cols.columns
     encoded_cols = pd.get_dummies(cat_cols)
@@ -150,4 +154,5 @@ def one_hot_encode(df):
 
     #add encoded columns
     stroke_data = pd.concat([stroke_data,encoded_cols], axis = 1)
+    #print(stroke_data.shape)
     return stroke_data
