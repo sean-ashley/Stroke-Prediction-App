@@ -5,10 +5,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
+from imblearn.pipeline import Pipeline
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
 import pickle
 from sklearn.preprocessing import FunctionTransformer
 from dataprocessing import load_data,add_diabetes,impute,one_hot_encode,add_bodytype,add_missing_cols,get_all_tags
-
+from sklearn.model_selection import RepeatedStratifiedKFold
 
 def build_pipeline():
     """
@@ -22,24 +25,29 @@ def build_pipeline():
     add_diabetes_transformed = FunctionTransformer(add_diabetes)
     add_missing_cols_transformed = FunctionTransformer(add_missing_cols,kw_args={"total_tags":get_all_tags(full_df)})
     pipeline = Pipeline([
-    
+
+  
     ("add_bodytype",add_bodytype_transformed),
     ("add_diabetes",add_diabetes_transformed),
     ("impute",impute_transformed),
     ("one_hot_encode",one_hot_encode_transformed),
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
-    ("pred",XGBClassifier(nthread = -1,verbosity = 0))
+    ("over" , SMOTE(sampling_strategy=0.1)),
+    ("under", RandomUnderSampler(sampling_strategy=0.5)),
+    ("pred",XGBClassifier(nthread = -1,verbosity = 0,tree_method = 'gpu_hist',eval_metric = "aucpr"))
     ])
     
     #set up parameters to test
     parameters = {
-        'pred__n_estimators': [50, 100, 200,300,400],
-        'pred__learning_rate': [0.001,0.01,0.05,0.1,0.3]
-    }
-    cv = GridSearchCV(pipeline, param_grid=parameters)
 
-    return cv
+       'pred__scale_pos_weight' : list(range(1,60,5)),
+       'over__k_neighbors' : list(range(1,8))
+   }
+    cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3)
+    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1, cv = cv ,scoring ='average_precision')
+
+    return grid
 
 def evaluate_model(model, X_test, y_test):
     """
@@ -53,15 +61,13 @@ def evaluate_model(model, X_test, y_test):
     returns:
         None: Print out metrics (recall, precision, f1_score)
     """
-    #make prediciton
-    cols = ['age', 'hypertension', \
-            'heart_disease', 'avg_glucose_level', 'bmi', 'is_user_diabetic', 'Female', 'Govt_job', 'Male', 'Never_worked', 'No', 'Normal',\
-                 'Obese', 'Overweight', 'Private', 'Rural', 'Self-employed', 'Underweight', 'Urban', 'Yes', 'children', 'Other', 'stroke']
+    #make classification
+    
+# evaluate model
     y_pred = model.predict(X_test)
     
     #make classification
     classification = classification_report(y_test,y_pred)
-
     print(classification)
 
 
