@@ -2,32 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-
-def load_data(data_path,test_size = 0.1,random_state = 42):
-    """
-    desc : read in data and seperate into training and test data
-
-    args:
-        data (string) : path to data
-        test_size (float) : portion of the data set reserved for testing
-        random_state (int) : Seed to use to randomely select 
-    return:
-        X_train (pd.DataFrame) : training data
-        X_test (pd.DataFrame) : testing data
-        y_train (pd.DataFrame) : training target
-        y_test (pd.DataFrame) : testing target
-    """
-    
-    stroke_data = pd.read_csv(data_path,index_col = "id")
-
-    y = stroke_data["stroke"]
-    
-    X = stroke_data.drop(columns=["stroke"], axis=1)
-
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = test_size,random_state=random_state)
-
-
-    return X_train, X_test, y_train, y_test
+from sklearn.preprocessing import MultiLabelBinarizer
 
 def is_user_diabetic(avg_glucose_level):
     """
@@ -38,10 +13,10 @@ def is_user_diabetic(avg_glucose_level):
         blood_cat (string) : blood sugar category
     """
     if avg_glucose_level >= 200:
-        return True
+        return 1
     
     else:
-        return False
+        return 0
 
 def add_diabetes(df,add_col = True):
     """
@@ -68,6 +43,7 @@ def bmi_to_bodytype(bmi):
     returns:
         bodytype (string) : The users bodytype
     """
+    
     if bmi < 18.5:
         return "Underweight"
     
@@ -97,12 +73,13 @@ def add_bodytype(df, add_col = True):
         imputer = SimpleImputer()
 
         imputed_cols = imputer.fit_transform(num_cols)
-        imputed_cols = pd.DataFrame(data = imputed_cols,columns = num_cols.columns)
+        imputed_cols = pd.DataFrame(data = imputed_cols,columns = num_cols.columns,index = num_cols.index)
 
 
         #apply function
 
         stroke_data["body_type"] =  imputed_cols["bmi"].apply(bmi_to_bodytype)
+        
         return stroke_data
     #if we dont want to add the col the same df
     return df
@@ -146,9 +123,10 @@ def one_hot_encode(df):
     stroke_data = df.copy()
     
     cat_cols = stroke_data.select_dtypes(include = ["object"])
+    cat_vals = cat_cols.values
     cat_cols_names = cat_cols.columns
-    encoded_cols = pd.get_dummies(cat_cols)
-
+    binarizer = MultiLabelBinarizer()
+    encoded_cols = pd.DataFrame(binarizer.fit_transform(cat_vals),columns = binarizer.classes_,index = cat_cols.index)
     #drop non one hot encoded cols
     stroke_data.drop(columns = cat_cols_names, axis = 1, inplace = True)
 
@@ -156,3 +134,84 @@ def one_hot_encode(df):
     stroke_data = pd.concat([stroke_data,encoded_cols], axis = 1)
     #print(stroke_data.shape)
     return stroke_data
+
+def get_all_tags(df):
+    """
+    desc : get all possible tags for the df
+    args:
+        df (pd.DataFrame) : stroke dataframe
+    return:
+        all_tags (list) : full list of tags
+    """
+
+    #add feature columns
+    diabetes_df  = add_diabetes(df)
+
+    body_type_df = add_bodytype(diabetes_df)
+
+    #impute and onehotencode
+    imputed_df = impute(body_type_df)
+
+    encoded_df = one_hot_encode(imputed_df)
+
+    return encoded_df.columns
+
+def add_missing_cols(df, total_tags):
+    """
+    desc : add any missing columns and fill with 0's to make sure we can use gridsearchcv
+    args:
+        df (pd.DataFrame) : stroke dataframe
+        all_tags (list) : full list of tags
+    return:
+        df (pd.DataFrame) : stroke dataframe with all columns added
+    """
+    #convert to set so we can perform set operations
+    df_cols = set(df.columns)
+    
+    total_tags = set(total_tags)
+
+    cols_to_add = list(total_tags.difference(df_cols))
+    cols = ['age', 'hypertension', \
+            'heart_disease', 'avg_glucose_level', 'bmi', 'is_user_diabetic', 'Female', 'Govt_job', 'Male', 'Never_worked', 'No', 'Normal',\
+                 'Obese', 'Overweight', 'Private', 'Rural', 'Self-employed', 'Underweight', 'Urban', 'Yes', 'children', 'Other', 'stroke']
+    if cols_to_add:
+      
+        #make an array of zeros for all of the columns we are going to add
+        zeros = np.zeros(shape = (df.shape[0],len(cols_to_add)))
+
+        #add the cols
+        df[cols_to_add] = zeros
+        #maintain same order no matter what
+        df = df[cols]
+        print(df)
+        return df
+    df = df[cols]
+    return df
+
+def load_data(data_path,test_size = 0.1,random_state = 42):
+    """
+    desc : read in data, one hot encode, and seperate into training and test data
+
+    args:
+        data (string) : path to data
+        test_size (float) : portion of the data set reserved for testing
+        random_state (int) : Seed to use to randomely select 
+    return:
+        X_train (pd.DataFrame) : training data
+        X_test (pd.DataFrame) : testing data
+        y_train (pd.DataFrame) : training target
+        y_test (pd.DataFrame) : testing target
+    """
+    
+    stroke_data = pd.read_csv(data_path,index_col = "id")
+    #drop smoking status, 30% missing
+    stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
+    
+    y = stroke_data["stroke"]
+    
+    X = stroke_data.drop(columns=["stroke"], axis=1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = test_size,random_state=random_state)
+
+
+    return X_train, X_test, y_train, y_test
