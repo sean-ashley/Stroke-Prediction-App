@@ -211,7 +211,8 @@ def load_data(data_path,test_size = 0.1):
     
     X = stroke_data.drop(columns=["stroke"], axis=1)
 
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = test_size)
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = test_size, random_state=1)
 
 
     return X_train, X_test, y_train, y_test
+    
