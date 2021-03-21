@@ -112,4 +112,4 @@ def main(database_filepath,model_filepath):
 
 
 if __name__ == '__main__':
-    main("../data/healthcare-dataset-stroke-data.csv","model.pickle")
+    main("../data/healthcare-dataset-stroke-data.csv","model1.pickle")

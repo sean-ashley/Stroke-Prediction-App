@@ -205,7 +205,7 @@ def load_data(data_path,test_size = 0.1):
     
     stroke_data = pd.read_csv(data_path,index_col = "id")
     #drop smoking status, 30% missing
-    stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
+    #stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
     
     y = stroke_data["stroke"]
     
