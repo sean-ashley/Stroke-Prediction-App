@@ -135,6 +135,18 @@ def one_hot_encode(df):
     #print(stroke_data.shape)
     return stroke_data
 
+def add_preexisting(df):
+    """
+    desc : denotes whether or not a user has a pre-existing heart condition (high blood pressure or heart disease)
+    args:
+        df (pd.DataFrame) : stroke dataframe
+    returns:
+        df (pd.DataFrame) : stroke dataframe with pre_existing column
+    """
+    stroke_data = df.copy()
+    stroke_data["pre_existing"] = (stroke_data['hypertension'] + stroke_data['heart_disease']).astype("bool")
+    return stroke_data
+
 def get_all_tags(df):
     """
     desc : get all possible tags for the df
@@ -149,12 +161,16 @@ def get_all_tags(df):
 
     body_type_df = add_bodytype(diabetes_df)
 
+    pre_existing_df = add_preexisting(body_type_df)
     #impute and onehotencode
-    imputed_df = impute(body_type_df)
+    imputed_df = impute(pre_existing_df)
 
     encoded_df = one_hot_encode(imputed_df)
 
     return encoded_df.columns
+
+
+
 
 def add_missing_cols(df, total_tags):
     """
@@ -171,9 +187,7 @@ def add_missing_cols(df, total_tags):
     total_tags = set(total_tags)
 
     cols_to_add = list(total_tags.difference(df_cols))
-    cols = ['age', 'hypertension', \
-            'heart_disease', 'avg_glucose_level', 'bmi', 'is_user_diabetic', 'Female', 'Govt_job', 'Male', 'Never_worked', 'No', 'Normal',\
-                 'Obese', 'Overweight', 'Private', 'Rural', 'Self-employed', 'Underweight', 'Urban', 'Yes', 'children', 'Other', 'stroke']
+    cols = sorted(list(total_tags))
     if cols_to_add:
       
         #make an array of zeros for all of the columns we are going to add
@@ -183,10 +197,11 @@ def add_missing_cols(df, total_tags):
         df[cols_to_add] = zeros
         #maintain same order no matter what
         df = df[cols]
-        print(df)
+       
         return df
     df = df[cols]
     return df
+
 
 def load_data(data_path,test_size = 0.1):
     """
@@ -204,6 +219,7 @@ def load_data(data_path,test_size = 0.1):
     """
     
     stroke_data = pd.read_csv(data_path,index_col = "id")
+    #print(one_hot_encode(stroke_data).columns)
     #drop smoking status, 30% missing
     #stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
     
@@ -215,4 +231,4 @@ def load_data(data_path,test_size = 0.1):
 
 
     return X_train, X_test, y_train, y_test
-    
+

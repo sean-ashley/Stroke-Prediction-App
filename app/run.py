@@ -17,11 +17,11 @@ app = Flask(__name__)
 engine = create_engine('sqlite:///../data/graphdata.db')
 
 # load model
-model = joblib.load("../training/classifier.pkl")
+#model = joblib.load("../training/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
-@app.route('/')
+@app.route('/dataoverview')
 @app.route('/index')
 def index():
 
@@ -40,42 +40,54 @@ def index():
     genders = pd.read_sql("genders",con = engine)
     diabetes = pd.read_sql("diabetes",con = engine)
     body_types = pd.read_sql("body_types",con = engine)
+    print(body_types)
     graphs = [
         {
             'data': [
                 Pie(
-                    labels= pre_existing["pre_existing"],
+                    labels= pre_existing["pre_condition"],
                     values = pre_existing["id"]
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
+                'title': 'Patients by Pre-existing Conditions'
             }
         },
         {'data': [
-                Bar(
-                    x=tag_names,
-                    y=tag_counts
+                Pie(
+                    labels= genders["gender"],
+                    values = genders["id"]
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Tags',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Tags"
+                'title': 'Patients by Gender'
+                }
+            },
+            {'data': [
+                Pie(
+                    labels= diabetes["is_user_diabetic"],
+                    values = diabetes["id"]
+                )
+            ],
+
+            'layout': {
+                'title': 'Patients with Diabetes'
+                }
+            },
+            {'data': [
+                Pie(
+                    labels= body_types["body_type"],
+                    values = body_types["id"]
+                )
+            ],
+
+            'layout': {
+                'title': 'Patients by Body Type'
                 }
             }
-        }
+
     ]
     
     # encode plotly graphs in JSON
@@ -86,26 +98,26 @@ def index():
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
 
 
-# web page that handles user query and displays model results
-@app.route('/go')
-def go():
-    """
-    process and predict disaster categories
-    from user input
-    """
-    # save user input in query
-    query = request.args.get('query', '') 
+# # web page that handles user query and displays model results
+# @app.route('/go')
+# def go():
+#     """
+#     process and predict disaster categories
+#     from user input
+#     """
+#     # save user input in query
+#     query = request.args.get('query', '') 
 
-    # use model to predict classification for query
-    classification_labels = model.predict([query])[0]
-    classification_results = dict(zip(df.columns[4:], classification_labels))
+#     # use model to predict classification for query
+#     classification_labels = model.predict([query])[0]
+#     classification_results = dict(zip(df.columns[4:], classification_labels))
 
-    # This will render the go.html Please see that file. 
-    return render_template(
-        'go.html',
-        query=query,
-        classification_result=classification_results
-    )
+#     # This will render the go.html Please see that file. 
+#     return render_template(
+#         'go.html',
+#         query=query,
+#         classification_result=classification_results
+#     )
 
 
 def main():
