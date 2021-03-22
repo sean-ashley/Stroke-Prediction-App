@@ -1,13 +1,9 @@
 import json
 import plotly
 import pandas as pd
-
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar, Pie
+from plotly.graph_objs import Pie
 import joblib
 from sqlalchemy import create_engine
 
@@ -17,13 +13,12 @@ app = Flask(__name__)
 engine = create_engine('sqlite:///../data/graphdata.db')
 
 # load model
-#model = joblib.load("../training/classifier.pkl")
+model = joblib.load("../data/model2.pickle")
 
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/dataoverview')
-@app.route('/index')
-def index():
+def dataoverview():
 
     """
     home page, lists out
@@ -40,7 +35,8 @@ def index():
     genders = pd.read_sql("genders",con = engine)
     diabetes = pd.read_sql("diabetes",con = engine)
     body_types = pd.read_sql("body_types",con = engine)
-    print(body_types)
+    strokes = pd.read_sql("strokes",con = engine)
+ 
     graphs = [
         {
             'data': [
@@ -86,6 +82,17 @@ def index():
             'layout': {
                 'title': 'Patients by Body Type'
                 }
+            },
+            {'data': [
+                Pie(
+                    labels= strokes["stroke"],
+                    values = strokes["id"]
+                )
+            ],
+
+            'layout': {
+                'title': 'Patients by Stroke'
+                }
             }
 
     ]
@@ -95,29 +102,7 @@ def index():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
-
-
-# # web page that handles user query and displays model results
-# @app.route('/go')
-# def go():
-#     """
-#     process and predict disaster categories
-#     from user input
-#     """
-#     # save user input in query
-#     query = request.args.get('query', '') 
-
-#     # use model to predict classification for query
-#     classification_labels = model.predict([query])[0]
-#     classification_results = dict(zip(df.columns[4:], classification_labels))
-
-#     # This will render the go.html Please see that file. 
-#     return render_template(
-#         'go.html',
-#         query=query,
-#         classification_result=classification_results
-#     )
+    return render_template('dataoverview.html', ids=ids, graphJSON=graphJSON)
 
 
 def main():
