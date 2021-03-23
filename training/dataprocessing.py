@@ -168,6 +168,52 @@ def get_all_tags(df):
     encoded_df = one_hot_encode(imputed_df)
 
     return encoded_df.columns
+#https://www.kaggle.com/sprakshith/stroke-prediction-beginner-s-guide/notebook
+def cat_to_numerical(df):
+    """
+    desc : convert some categorical columns to numerical
+    args:
+        df (pd.DataFrame) : stroke dataframe
+       
+    return:
+        df (pd.DataFrame) : stroke dataframe with columns converted
+    """
+    #Converting Categorical Data to Numerical
+
+
+    #Converting Categorical Data to Numerical
+    gender_dict = {'Male': 0, 'Female': 1, 'Other': 2}
+    ever_married_dict = {'No': 0, 'Yes': 1}
+    work_type_dict = {'children': 0, 'Never_worked': 1, 'Govt_job': 2, 'Private': 3, 'Self-employed': 4}
+    residence_type_dict = {'Rural': 0, 'Urban': 1}
+    smoking_status_dict = {'Unknown': 0, 'never smoked': 1, 'formerly smoked':2, 'smokes': 3}
+
+    df['gender'] = df['gender'].map(gender_dict)
+    df['ever_married'] = df['ever_married'].map(ever_married_dict)
+    df['work_type'] = df['work_type'].map(work_type_dict)
+    df['Residence_type'] = df['Residence_type'].map(residence_type_dict)
+    df['smoking_status'] = df['smoking_status'].map(smoking_status_dict)
+
+    return df 
+
+
+
+#https://www.kaggle.com/sprakshith/stroke-prediction-beginner-s-guide/notebook#Thanks-a-lot-for-showing-your-Interest
+def round_age_and_bmi(df):
+
+
+    # Round off Age
+    df['age'] = df['age'].apply(lambda x : round(x))
+
+    # BMI to NaN
+    df['bmi'] = df['bmi'].apply(lambda bmi_value: bmi_value if 12 < bmi_value < 60 else np.nan)
+
+    # Sorting DataFrame based on Gender then on Age and using Forward Fill-ffill() to fill NaN value for BMI
+    df.sort_values(['gender', 'age'], inplace=True) 
+    df.reset_index(drop=True, inplace=True)
+    df['bmi'].ffill(inplace=True)
+
+    return df
 
 
 
@@ -218,7 +264,7 @@ def load_data(data_path,test_size = 0.1):
         y_test (pd.DataFrame) : testing target
     """
     
-    stroke_data = pd.read_csv(data_path,index_col = "id")
+    stroke_data = pd.read_csv(data_path).drop(columns = ["id"])
     #print(one_hot_encode(stroke_data).columns)
     #drop smoking status, 30% missing
     #stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
@@ -231,4 +277,3 @@ def load_data(data_path,test_size = 0.1):
 
 
     return X_train, X_test, y_train, y_test
-

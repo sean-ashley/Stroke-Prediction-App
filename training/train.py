@@ -2,22 +2,22 @@
 from numpy.lib.function_base import gradient
 import pandas as pd
 import numpy as np
-from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report,precision_recall_curve
 from xgboost import XGBClassifier
 from imblearn.pipeline import Pipeline
 import pickle
-from sklearn.preprocessing import FunctionTransformer
+from sklearn.preprocessing import FunctionTransformer,StandardScaler
 from dataprocessing import load_data,add_diabetes,impute,one_hot_encode,add_bodytype,add_missing_cols,get_all_tags,add_preexisting
 from sklearn.model_selection import RepeatedStratifiedKFold
 from imblearn.combine import SMOTEENN
+from imblearn.over_sampling import SMOTE
 
 def build_pipeline():
     """
     create the pipeline for the model, and optimize with gridsearch
     """
-    full_df = pd.read_csv("../data/healthcare-dataset-stroke-data.csv",index_col = "id").drop(columns = ["stroke"],axis=1)
+    full_df = pd.read_csv("../data/healthcare-dataset-stroke-data.csv").drop(columns = ["stroke",'id'],axis=1)
     #transform functions to make the pipeline work
     one_hot_encode_transformed = FunctionTransformer(one_hot_encode)
     impute_transformed = FunctionTransformer(impute)
@@ -25,6 +25,8 @@ def build_pipeline():
     add_diabetes_transformed = FunctionTransformer(add_diabetes)
     add_preexisting_transformed = FunctionTransformer(add_preexisting)
     add_missing_cols_transformed = FunctionTransformer(add_missing_cols,kw_args={"total_tags":get_all_tags(full_df)})
+
+
     pipeline = Pipeline([
 
   
@@ -36,7 +38,7 @@ def build_pipeline():
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
     ("over_under" , SMOTEENN()),
-    ("pred",XGBClassifier(nthread = -1,verbosity = 0,tree_method = 'gpu_hist',eval_metric = "aucpr",sampling_method = "gradient_based"))
+    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "aucpr",sampling_method = "gradient_based"))
     ])
     
     #set up parameters to test
@@ -48,7 +50,7 @@ def build_pipeline():
       
    }        
    
-    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="average_precision",verbose = 1)
+    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
 
     return grid
 
@@ -68,7 +70,7 @@ def evaluate_model(model, X_test, y_test):
     
 # evaluate model
     y_pred = model.predict(X_test)
-    y_proba = model.predict_proba(X_test)[:,1]
+    
     #make classification
     classification = classification_report(y_test,y_pred)
     print(classification)
@@ -114,4 +116,4 @@ def main(database_filepath,model_filepath):
 
 
 if __name__ == '__main__':
-    main("../data/healthcare-dataset-stroke-data.csv","model3.pickle")
+    main("../data/healthcare-dataset-stroke-data.csv","model4.pickle")
