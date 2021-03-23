@@ -13,7 +13,7 @@ app = Flask(__name__)
 engine = create_engine('sqlite:///../data/graphdata.db')
 
 # load model
-model = joblib.load("../data/model2.pickle")
+#model = joblib.load("../data/model2.pickle")
 
 
 # index webpage displays cool visuals and receives user input text for model
