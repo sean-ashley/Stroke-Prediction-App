@@ -69,7 +69,7 @@ def add_bodytype(df, add_col = True):
         stroke_data = df.copy()
         num_cols = stroke_data.select_dtypes(exclude=  ["object"])
         num_cols_names = num_cols.columns
-        #impute missing values again to take into account new columns
+        #impute missing values to get body type for all users
         imputer = SimpleImputer()
 
         imputed_cols = imputer.fit_transform(num_cols)
@@ -252,7 +252,7 @@ def add_missing_cols(df, total_tags):
 
 def load_data(data_path,test_size = 0.1):
     """
-    desc : read in data, one hot encode, and seperate into training and test data
+    desc : read in data, and seperate into training and test data
 
     args:
         data (string) : path to data
