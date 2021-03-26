@@ -31,9 +31,9 @@ def build_pipeline():
     pipeline = Pipeline([
 
   
-    #("add_bodytype",add_bodytype_transformed),
+    ("add_bodytype",add_bodytype_transformed),
     #("add_diabetes",add_diabetes_transformed),
-    #("add_preexisting",add_preexisting_transformed),
+    ("add_preexisting",add_preexisting_transformed),
     ("impute",impute_transformed),
     ("one_hot_encode",one_hot_encode_transformed),
     ("add_missing_cols",add_missing_cols_transformed),
