@@ -18,6 +18,7 @@ def build_pipeline():
     create the pipeline for the model, and optimize with gridsearch
     """
     full_df = pd.read_csv("../data/healthcare-dataset-stroke-data.csv").drop(columns = ["stroke",'id'],axis=1)
+    full_df = full_df[~(full_df["gender"] == "Other")]
     #transform functions to make the pipeline work
     one_hot_encode_transformed = FunctionTransformer(one_hot_encode)
     impute_transformed = FunctionTransformer(impute)
@@ -30,15 +31,15 @@ def build_pipeline():
     pipeline = Pipeline([
 
   
-    ("add_bodytype",add_bodytype_transformed),
-    ("add_diabetes",add_diabetes_transformed),
-    ("add_preexisting",add_preexisting_transformed),
+    #("add_bodytype",add_bodytype_transformed),
+    #("add_diabetes",add_diabetes_transformed),
+    #("add_preexisting",add_preexisting_transformed),
     ("impute",impute_transformed),
     ("one_hot_encode",one_hot_encode_transformed),
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
     ("over_under" , SMOTEENN()),
-    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "aucpr",sampling_method = "gradient_based"))
+    ("pred",XGBClassifier(nthread = -1,verbosity = 1,eval_metric = "aucpr"))
     ])
     
     #set up parameters to test

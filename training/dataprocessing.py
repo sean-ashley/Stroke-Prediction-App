@@ -157,13 +157,14 @@ def get_all_tags(df):
     """
 
     #add feature columns
-    diabetes_df  = add_diabetes(df)
+    #diabetes_df  = add_diabetes(df)
 
-    body_type_df = add_bodytype(diabetes_df)
+    #body_type_df = add_bodytype(diabetes_df)
 
-    pre_existing_df = add_preexisting(body_type_df)
+    #pre_existing_df = add_preexisting(body_type_df)
     #impute and onehotencode
-    imputed_df = impute(pre_existing_df)
+
+    imputed_df = impute(df)
 
     encoded_df = one_hot_encode(imputed_df)
 
@@ -269,7 +270,7 @@ def load_data(data_path,test_size = 0.1):
     #print(one_hot_encode(stroke_data).columns)
     #drop smoking status, 30% missing
     #stroke_data = stroke_data.drop(columns = ["smoking_status"],axis = 1)
-    
+    stroke_data = stroke_data[~(stroke_data["gender"] == "Other")]
     y = stroke_data["stroke"]
     
     X = stroke_data.drop(columns=["stroke"], axis=1)
