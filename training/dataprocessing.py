@@ -246,6 +246,7 @@ def add_missing_cols(df, total_tags):
        
         return df
     df = df[cols]
+    df.to_csv("cleaned_data.csv")
     return df
 
 

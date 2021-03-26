@@ -50,9 +50,9 @@ def build_pipeline():
       
    }        
    
-    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
+    #grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
 
-    return grid
+    return pipeline
 
 def evaluate_model(model, X_test, y_test):
     """
