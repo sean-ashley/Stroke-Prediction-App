@@ -1,0 +1,161 @@
+<html>
+    <body>
+        <form>
+            <div class="container">
+                <h1>Stroke Prediction Form</h1>
+                <p>Fill in this form to check whether you may be at risk of getting a stroke</p>
+                <hr>
+                
+                <label for="gender"><b><u>GENDER</u></b></label>
+                <br>
+                <select name="gender" id="gender" required>
+                    <option disabled selected value>-- Select --</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <br>
+                <br>
+
+                <label for="age"><b><u>AGE</u></b></label>
+                <br>
+                <input type="number" min="0" max="130" placeholder="Age" name="age" id="age" required>
+                <br>
+                <br>
+
+                <label for="hypertension"><b><u>DO YOU HAVE HYPERTENSION?</u></b></label>
+                <br>
+                <input type="radio" name="hypertension" id="hyp-true" value="true" required>
+                <label for="hyp-true">Yes</label>
+                <br>
+                <input type="radio" name="hypertension" id="hyp-false" value="true" required>
+                <label for="hyp-false">No</label>
+                <br>
+                <br>
+
+                <label for="heart-disease"><b><u>DO YOU HAVE HEART DISEASE?</u></b></label>
+                <br>
+                <input type="radio" name="heart-disease" id="heart-true" value="true" required>
+                <label for="heart-true">Yes</label>
+                <br>
+                <input type="radio" name="heart-disease" id="heart-false" value="true" required>
+                <label for="heart-false">No</label>
+                <br>
+                <br>
+
+                <label for="diabetes"><b><u>DO YOU HAVE DIABETES?</u></b></label>
+                <br>
+                <input type="radio" name="diabetes" id="diabetes-true" value="true" required>
+                <label for="heart-true">Yes</label>
+                <br>
+                <input type="radio" name="diabetes" id="diabetes-false" value="true" required>
+                <label for="heart-false">No</label>
+                <br>
+                <br>
+
+                <label for="marital-status"><b><u>MARITAL STATUS</u></b></label>
+                <br>
+                <input type="radio" name="marriage" id="marriage-true" value="true" required>
+                <label for="marriage-true">Married/Previously Married</label>
+                <br>
+                <input type="radio" name="marriage" id="marriage-false" value="true" required>
+                <label for="marriage-false">Never Married</label>
+                <br>
+                <br>
+
+                <label for="work"><b><u>WORK ENVIRONMENT</u></b></label>
+                <br>
+                <select name="work" id="work" required>
+                    <option disabled selected value>-- Select --</option>
+                    <option value="private">Private</option>
+                    <option value="self-employed">Self-Employed</option>
+                    <option value="gov-job">Government Job</option>
+                    <option value="unemployed">Unemployed</option>
+                    <option value="other">Other</option>
+                </select>
+                <br>
+                <br>
+
+                <label for="environment"><b><u>RESIDENTIAL ENVIRONMENT</u></b></label>
+                <br>
+                <input type="radio" name="environment" id="rural" value="rural" required>
+                <label for="rural">Rural</label>
+                <br>
+                <input type="radio" name="environment" id="urban" value="urban" required>
+                <label for="urban">Urban</label>
+                <br>
+                <br>
+
+                <label for="height"><b><u>HEIGHT (m)</u></b></label>
+                <br>
+                <input type="number" min="0" max="3.00" placeholder="Enter Height" name="height" id="height" step=".01" required>
+                <br>
+                <br>
+
+                <label for="weight"><b><u>WEIGHT (Kg)</u></b></label>
+                <br>
+                <input type="number" min="0" max="440" placeholder="Enter Weight" name="weight" id="weight" step=".01" required>
+                <br>
+                <br>
+
+                <label for="smoking"><b><u>SMOKED OR PREVIOUSLY SMOKED?</u></b></label>
+                <br>
+                <select name="smoke" id="smoke" required>
+                    <option disabled selected value>-- Select --</option>
+                    <option value="smoker">Smoker</option>
+                    <option value="prev-smoker">Previous Smoker</option>
+                    <option value="non-smoker">Never Smoked</option>
+                </select>
+                <br>
+                <br>
+
+                <hr>
+                
+                <button type="submit" class="registerbtn">Submit Responses</button>
+            </div>
+        
+        </form>
+    </body>
+    <!-- Gender: Female, male, or other DROPDOWN MENU -->
+    <!-- Age: A positive integer INPUT BOX -->
+    <!-- Hypertension: Yes or No (will be translated to True/False) DROPDOWN MENU/radio buttons -->
+    <!-- Heart Disease: Yes or No (same as hypertension) DROPDOWN MENU/radio buttons -->
+    <!-- Ever been married: Yes or No (same as above) DROPDOWN MENU/radio buttons -->
+    <!-- Type of work: Private, self-employed, other DROPDOWN MENU/radio buttons -->
+    <!-- Residence: Rural or urban DROPDOWN MENU/radio buttons -->
+    <!-- Diabetes: Yes or No DROPDOWN MENU/radio buttons -->
+    <!-- Height: positive float INPUT BOX -->
+    <!-- Weight: positive float INPUT BOX -->
+    <!-- Smoking Habits: Smokes, formerly a smoker, never smoked DROPDOWN MENU/radio buttons -->
+    <script>
+        function formResults(){
+            var gender, age, hypertension, heartDisease, diabetes, marriage, work, environment, diabetes, height, weight, smoke;
+            gender = document.getElementById("gender").value;
+            age = document.getElementById("age").value;
+            hypertension = document.getElementByName("hypertension").value;
+            heartDisease = document.getElementByName("heart-disease").value;
+            diabetes = document.getElementByName("diabetes").value;
+            marriage = document.getElementByName("marriage").value;
+            work = document.getElementById("work").value;
+            environment = document.getElementById("environment").value;
+            diabetes = document.getElementById("diabetes").value;
+            height = document.getElementById("height").value;
+            weight = document.getElementById("weight").value;
+            smoke = document.getElementById("smoke").value;
+
+
+            document.write(gender);
+            document.write(age);
+            document.write(hypertension);
+            document.write(heartDisease);
+            document.write(diabetes);
+            document.write(marriage);
+            document.write(work);
+            document.write(environment);
+            document.write(diabetes);
+            document.write(height);
+            document.write(weight);
+            document.write(smoke);
+        }
+    </script>
+</html>

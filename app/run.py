@@ -104,6 +104,11 @@ def dataoverview():
     # render web page with plotly graphs
     return render_template('dataoverview.html', ids=ids, graphJSON=graphJSON)
 
+@app.route("/",methods=["GET"])
+def home():
+    if request.method == "GET":
+        print(request.args.get("gender"))
+    return render_template("home.html")
 
 def main():
     """
