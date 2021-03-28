@@ -107,7 +107,7 @@ def dataoverview():
 @app.route("/",methods=["GET"])
 def home():
     if request.method == "GET":
-        print(request.args.get("gender"))
+        print(type(request.args.get("hypertension")))
     return render_template("home.html")
 
 def main():
