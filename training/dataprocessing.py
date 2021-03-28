@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.preprocessing import OneHotEncoder
 
 def is_user_diabetic(avg_glucose_level):
     """
@@ -125,14 +125,18 @@ def one_hot_encode(df):
     cat_cols = stroke_data.select_dtypes(include = ["object"])
     cat_vals = cat_cols.values
     cat_cols_names = cat_cols.columns
-    binarizer = MultiLabelBinarizer()
-    encoded_cols = pd.DataFrame(binarizer.fit_transform(cat_vals),columns = binarizer.classes_,index = cat_cols.index)
+    enc = OneHotEncoder(sparse = False)
+    encoded_vals = enc.fit_transform(cat_vals)
+    encoded_cols = enc.get_feature_names(cat_cols_names)
+  
+    encoded_cols = pd.DataFrame(encoded_vals,columns = encoded_cols,index = cat_cols.index)
     #drop non one hot encoded cols
     stroke_data.drop(columns = cat_cols_names, axis = 1, inplace = True)
 
     #add encoded columns
     stroke_data = pd.concat([stroke_data,encoded_cols], axis = 1)
     #print(stroke_data.shape)
+    print(stroke_data)
     return stroke_data
 
 def add_preexisting(df):
@@ -159,11 +163,11 @@ def get_all_tags(df):
     #add feature columns
     diabetes_df  = add_diabetes(df)
 
-    body_type_df = add_bodytype(diabetes_df)
+    body_type_df = add_bodytype(df)
 
     pre_existing_df = add_preexisting(body_type_df)
     #impute and onehotencode
-    imputed_df = impute(pre_existing_df)
+    imputed_df = impute(body_type_df)
 
     encoded_df = one_hot_encode(imputed_df)
 

@@ -38,22 +38,31 @@ def build_pipeline():
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
     ("over_under" , SMOTEENN()),
-    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "aucpr",sampling_method = "gradient_based"))
+    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "auc",scale_pos_weight=1,
+                      learning_rate=0.01,  
+                      colsample_bytree = 0.4,
+                      subsample = 0.8,
+                      objective='binary:logistic', 
+                      n_estimators=1000, 
+                      reg_alpha = 0.3,
+                      max_depth=4, 
+                      gamma=10))
     ])
     
     #set up parameters to test
     parameters = {
 
-       'pred__scale_pos_weight' : list(range(1,60,5)),
+        'pred__n_estimators' : [100,500,1000],
+       'pred__scale_pos_weight' : list(range(1,60,10)),
        'over_under__sampling_strategy' : ['auto',0.1,0.2,0.3,0.4,0.5],
-       "pred__max_delta_step": list(range(0,11))
-      
+      "pred__max_depth":[3,4,5,6,7],
+      "pred__learning_rate" : [0.01,0.1,0.3],
+      "pred__gamma" : [0,1,5,10]
    }        
    
-    #grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
+    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
 
-    return pipeline
-
+    return grid
 def evaluate_model(model, X_test, y_test):
     """
     desc:   print out l1, recall, and precision
@@ -116,4 +125,4 @@ def main(database_filepath,model_filepath):
 
 
 if __name__ == '__main__':
-    main("../data/healthcare-dataset-stroke-data.csv","model4.pickle")
+    main("../data/healthcare-dataset-stroke-data.csv","model6.pickle")
