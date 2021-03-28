@@ -30,8 +30,8 @@ def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,
     args:
         gender (string) : users gender 
         age (float) : users age 
-        hypertension (string) : if user has hypertension 
-        heart_disease (string) : if user has heart disease
+        hypertension (1 or 0) : if user has hypertension 
+        heart_disease (1 or 0) : if user has heart disease
         diabetes (string) : if user has diabetes
         marital_status (string) : if user has been previously married
         work (string) : where the user works
@@ -47,4 +47,20 @@ def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,
 
     X = pd.DataFrame(columns = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married',
        'work_type', 'Residence_type', 'avg_glucose_level', 'bmi',
-       'smoking_status', 'stroke'])
+       'smoking_status'])
+
+    #assign variables to columns
+
+    X["gender"] = [gender]
+    X['age'] = [age]
+    X["hypertension"] = [float(hypertension)]
+    X['heart_disease'] = [float(heart_disease)]
+    X["ever_married"] = [marital_status]
+    X["work_type"] = [work]
+    X["Residence_type"] = [env]
+    X["avg_glucose_level"] = [205 if float(diabetes) else 135] #average blood glucose levels based on https://www.mayoclinic.org/diseases-conditions/diabetes/diagnosis-treatment/drc-20371451
+    X['bmi'] = [float(weight) / (float(height) ** 2)]
+    X["smoking_status"] = [smoking]
+    #return built df
+    return X
+
