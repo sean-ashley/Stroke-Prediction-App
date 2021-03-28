@@ -38,7 +38,7 @@ def build_pipeline():
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
     ("over_under" , SMOTEENN()),
-    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "auc",scale_pos_weight=1,
+    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "auc",scale_pos_weight=3,
                       learning_rate=0.01,  
                       colsample_bytree = 0.4,
                       subsample = 0.8,
@@ -62,7 +62,7 @@ def build_pipeline():
    
     grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
 
-    return grid
+    return pipeline
 def evaluate_model(model, X_test, y_test):
     """
     desc:   print out l1, recall, and precision

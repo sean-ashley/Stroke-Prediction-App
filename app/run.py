@@ -2,27 +2,26 @@ import json
 import plotly
 import pandas as pd
 from flask import Flask
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify,redirect
 from plotly.graph_objs import Pie
 import joblib
 from sqlalchemy import create_engine
-from predict import predict,build_df
-
+from predict import build_df,predict
+import pickle
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///../data/graphdata.db')
 
 # load model
-model = joblib.load("../data/model2.pickle")
-
+with open("../data/model5.pickle","rb") as picklefile:
+    model = pickle.load(picklefile)
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/dataoverview')
 def dataoverview():
 
     """
-    home page, lists out
-    visuals
+    provides interactive overview of training dataset
     """
     
     # extract data needed for visuals
@@ -106,6 +105,11 @@ def dataoverview():
 
 @app.route("/",methods=["GET"])
 def home():
+    """
+    gets users responses to the stroke questionnaire,
+    runs it thru the predictor,
+    and redirects them to the appropriate endpoint
+    """
     #if the user submits something
     if request.args.get("hypertension"):
         
@@ -121,16 +125,33 @@ def home():
         weight = request.args.get("weight")
         smoking = request.args.get("smoke")
         #build df
-
         X = build_df(gender = gender,age = age,hypertension = hypertension,heart_disease = heart_disease,diabetes = diabetes,marital_status = marital_status,work = work,env = env,height = height,weight = weight,smoking = smoking)
-       
         model = joblib.load("../data/model5.pickle")
         #predict
         prediction = predict(model,X)
-        print(prediction)
+        
+        #if the user gets a positive (stroke is likely) tell them
+        if prediction:
+            return redirect("/positive")
+        else:
+            return redirect("/negative")
 
     return render_template("home.html")
 
+@app.route("/positive")
+def stroke_positive():
+    """
+    render template if user is predicted positive for stroke
+    """
+    return render_template("postive.html")
+
+@app.route("/negative")
+def stroke_negative():
+    """
+    render template if user is predicted negative for stroke
+    """
+    return render_template("negative.html")
+    
 def main():
     """
     main run functions

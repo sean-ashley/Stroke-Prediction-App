@@ -14,10 +14,11 @@ def predict(model, X, threshold = 0.3):
     """
     
     #get the prediction probabilites
-    probability = model.predict_proba(X)[:,-1][0]
 
+    probability = model.predict_proba(X)[:,-1][0]
+    print(probability)
     #round the values based on our custom threshold
-    stroke = 1 if probability >= threshold else 0.0
+    stroke = 1 if probability >= threshold else 0
 
     return stroke
 
@@ -52,9 +53,9 @@ def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,
     #assign variables to columns
 
     X["gender"] = [gender]
-    X['age'] = [age]
-    X["hypertension"] = [float(hypertension)]
-    X['heart_disease'] = [float(heart_disease)]
+    X['age'] = [float(age)]
+    X["hypertension"] = [int(hypertension)]
+    X['heart_disease'] = [int(heart_disease)]
     X["ever_married"] = [marital_status]
     X["work_type"] = [work]
     X["Residence_type"] = [env]
