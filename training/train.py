@@ -1,9 +1,8 @@
 #Import libs
-from numpy.lib.function_base import gradient
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report,precision_recall_curve
+from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
 from imblearn.pipeline import Pipeline
 import pickle
@@ -11,7 +10,6 @@ from sklearn.preprocessing import FunctionTransformer,StandardScaler
 from dataprocessing import load_data,add_diabetes,impute,one_hot_encode,add_bodytype,add_missing_cols,get_all_tags,add_preexisting
 from sklearn.model_selection import RepeatedStratifiedKFold
 from imblearn.combine import SMOTEENN
-from imblearn.over_sampling import SMOTE
 
 def build_pipeline():
     """
@@ -38,7 +36,7 @@ def build_pipeline():
     ("add_missing_cols",add_missing_cols_transformed),
     #use all available threads
     ("over_under" , SMOTEENN()),
-    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "auc",scale_pos_weight=3,
+    ("pred",XGBClassifier(nthread = -1,verbosity = 1,tree_method = 'gpu_hist',eval_metric = "auc",scale_pos_weight=1,
                       learning_rate=0.01,  
                       colsample_bytree = 0.4,
                       subsample = 0.8,
@@ -50,17 +48,17 @@ def build_pipeline():
     ])
     
     #set up parameters to test
-    parameters = {
+#     parameters = {
 
-        'pred__n_estimators' : [100,500,1000],
-       'pred__scale_pos_weight' : list(range(1,60,10)),
-       'over_under__sampling_strategy' : ['auto',0.1,0.2,0.3,0.4,0.5],
-      "pred__max_depth":[3,4,5,6,7],
-      "pred__learning_rate" : [0.01,0.1,0.3],
-      "pred__gamma" : [0,1,5,10]
-   }        
+#         'pred__n_estimators' : [100,500,1000],
+#        'pred__scale_pos_weight' : list(range(1,60,10)),
+#        'over_under__sampling_strategy' : ['auto',0.1,0.2,0.3,0.4,0.5],
+#       "pred__max_depth":[3,4,5,6,7],
+#       "pred__learning_rate" : [0.01,0.1,0.3],
+#       "pred__gamma" : [0,1,5,10]
+#    }        
    
-    grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
+#     grid = GridSearchCV(pipeline, param_grid=parameters,n_jobs = -1 ,scoring ="roc_auc",verbose = 3)
 
     return pipeline
 def evaluate_model(model, X_test, y_test):
