@@ -1,13 +1,13 @@
-import json
 import plotly
 import pandas as pd
 from flask import Flask
-from flask import render_template, request, jsonify,redirect
+from flask import render_template, request, redirect
 from plotly.graph_objs import Pie
-import joblib
 from sqlalchemy import create_engine
 from predict import build_df,predict
+from waitress import serve
 import pickle
+import json
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///../data/graphdata.db')
@@ -121,11 +121,15 @@ def home():
         marital_status = request.args.get("marriage")
         work = request.args.get("work")
         env = request.args.get("environment")
-        height = request.args.get("height")
+        feet = request.args.get("feet")
+        inches = request.args.get("inches")
         weight = request.args.get("weight")
         smoking = request.args.get("smoke")
+        print(feet)
+        print(inches)
+        print(weight)
         #build df
-        X = build_df(gender = gender,age = age,hypertension = hypertension,heart_disease = heart_disease,diabetes = diabetes,marital_status = marital_status,work = work,env = env,height = height,weight = weight,smoking = smoking)
+        X = build_df(gender = gender,age = age,hypertension = hypertension,heart_disease = heart_disease,diabetes = diabetes,marital_status = marital_status,work = work,env = env,feet = feet,inches = inches,weight = weight,smoking = smoking)
         model = joblib.load("../data/model5.pickle")
         #predict
         prediction = predict(model,X)
@@ -143,7 +147,7 @@ def stroke_positive():
     """
     render template if user is predicted positive for stroke
     """
-    return render_template("postive.html")
+    return render_template("positive.html")
 
 @app.route("/negative")
 def stroke_negative():
@@ -156,7 +160,7 @@ def main():
     """
     main run functions
     """
-    app.run(host='0.0.0.0', port=3001, debug=True)
+    serve(app,host='0.0.0.0', port=5000)
 
 
 if __name__ == '__main__':

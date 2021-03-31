@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 def predict(model, X, threshold = 0.3):
     """
@@ -24,7 +23,7 @@ def predict(model, X, threshold = 0.3):
 
 
 
-def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,env,height,weight,smoking):
+def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,env,feet,inches,weight,smoking):
     """
     desc:   takes in user input from frontend forms and converts it to our X dataframe
     
@@ -37,13 +36,21 @@ def build_df(gender,age,hypertension,heart_disease,diabetes,marital_status,work,
         marital_status (string) : if user has been previously married
         work (string) : where the user works
         env (string) : where the user lives
-        height (float) : users height in metres
+        feet (float) : users height feet 
+        inches (float) : users height float
         weight (float) : users weight in kg
         smoking (string) : users smoking status
     returns:
         X (pd.DataFrame): X values to be passed to model.
     """
     
+    #convert height to m
+    inches_to_feet = float(inches) / 12 
+
+    height = (float(feet) + inches_to_feet) * 0.3048
+
+    #convert mass to kg
+    weight = float(weight) * 0.453592
     #create empty dataframe
 
     X = pd.DataFrame(columns = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married',

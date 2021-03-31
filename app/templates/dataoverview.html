@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Stroke Predictor</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>h1.ex1 {
@@ -18,21 +16,12 @@
 
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Stroke Prediction App</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/dataoverview">Data Overview</a></li>
-                <li><a href="https://www.linkedin.com/in/sean-ashley/">LinkedIn</a></li>
-                <li><a href="https://github.com/sean-ashley">GitHub</a></li>
-                <li><a href="mailto:sean.d.ashley@gmail.com">Email</a></li>
-            </ul>
-        </div>
+    <div class="topnav">
+        <a class="active" href="/dataoverview">Data Overview</a>
+        <a href="https://www.linkedin.com/in/sean-ashley/">LinkedIn</a>
+        <a href="https://github.com/sean-ashley">GitHub</a>
+        <a href="mailto:sean.d.ashley@gmail.com">Email</a>
     </div>
-</nav>
 
 
 <div class="container">
@@ -54,6 +43,35 @@
         Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
     }
 </script>
+
+<style>
+    .center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+    }
+
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+</style>
 
 </body>
 </html>
