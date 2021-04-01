@@ -1,7 +1,6 @@
 FROM python:3.7
-COPY . /app
-WORKDIR /app
+WORKDIR /stroke-prediction-app/app
+ADD . /stroke-prediction-app
 RUN pip install -r requirements.txt
 EXPOSE 5000
-ENTRYPOINT ["python"]
-CMD ["app/run.py"]
+CMD ["python","run.py"]

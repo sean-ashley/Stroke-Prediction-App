@@ -6,15 +6,13 @@ from plotly.graph_objs import Pie
 from sqlalchemy import create_engine
 from predict import build_df,predict
 from waitress import serve
-import pickle
+import joblib
 import json
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///../data/graphdata.db')
 
-# load model
-with open("../data/model5.pickle","rb") as picklefile:
-    model = pickle.load(picklefile)
+
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/dataoverview')
