@@ -1,77 +1,30 @@
-<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Stroke Predictor</title>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>h1.ex1 {
-        padding-top: 25px;
-      }</style>
-</head>
-
-<body>
-
-    <div class="topnav">
-        <a class="active" href="/dataoverview">Data Overview</a>
-        <a href="https://www.linkedin.com/in/sean-ashley/">LinkedIn</a>
-        <a href="https://github.com/sean-ashley">GitHub</a>
-        <a href="mailto:sean.d.ashley@gmail.com">Email</a>
-    </div>
-
-
-<div class="container">
-    {% block content %}
-        <div class="page-header">
-            <h1 class="text-center ex1">Overview of Training Dataset</h1>
+    <header>
+        <title>Data Overview</title>
+        <link rel="stylesheet" href="styleSheet.css">
+    </header>
+    <body style="background-color:#EFE6DD">
+        <!-- Navigation Bar -->
+        <nav>
+            <ul class="navigation" style="background:#C59E77">
+                <li><a href="/home" style="color:#FFFFFF">Predict</a></li>
+                <li><a href="https://www.linkedin.com/in/sean-ashley/" target="_blank" style="color:#FFFFFF"><img src="linkedIn.png" height="30px"></a></li>
+                <li><a href="https://github.com/sean-ashley" target="_blank" style="color:#FFFFFF"><img src="github.png" height="30px"></a></li>
+                <li><a href="mailto:sean.d.ashley@gmail.com" target="_blank" style="color:#FFFFFF">Email</a></li>
+                <li><a href="https://sean-ashley.medium.com/can-ai-predict-your-stroke-before-it-happens-feec17f12145" target="_blank" style="color:#FFFFFF">Article</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Data Overview Graphs -->
+        <center><h3 style="font-family:noto-sans;font-size:36px;">Data Overview</h3></center>
+        <div class="page-row">
+            <div class="column">
+                <!-- GRAPH 1 GOES HERE -->
+                <!-- GRAPH 2 GOES HERE -->
+            </div>
+            <div class="column">
+                <!-- GRAPH 3 GOES HERE -->
+                <!-- GRAPH 4 GOES HERE -->
+            </div>
         </div>
-    {% endblock %}
-
-    {% for id in ids %}
-        <div id="{{id}}"></div>
-    {% endfor %}
-</div>
-
-<script type="text/javascript">
-    const graphs = {{graphJSON | safe}};
-    const ids = {{ids | safe}};
-    for(let i in graphs) {
-        Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
-    }
-</script>
-
-<style>
-    .center {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        /* bring your own prefixes */
-        transform: translate(-50%, -50%);
-    }
-
-    .topnav {
-        overflow: hidden;
-        background-color: #333;
-    }
-
-    .topnav a {
-        float: left;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-    }
-
-    .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-</style>
-
-</body>
 </html>
