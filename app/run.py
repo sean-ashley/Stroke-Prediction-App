@@ -46,7 +46,8 @@ def dataoverview():
             ],
 
             'layout': {
-                'title': 'Patients by Pre-existing Conditions'
+                'title': 'Patients by Pre-existing Conditions',
+                'paper_bgcolor' : '#EFE6DD'
             }
         },
         {'data': [
@@ -58,7 +59,8 @@ def dataoverview():
             ],
 
             'layout': {
-                'title': 'Patients by Gender'
+                'title': 'Patients by Gender',
+                'paper_bgcolor' : '#EFE6DD'
                 }
             },
             {'data': [
@@ -70,7 +72,8 @@ def dataoverview():
             ],
 
             'layout': {
-                'title': 'Patients with Diabetes'
+                'title': 'Patients with Diabetes',
+                'paper_bgcolor' : '#EFE6DD'
                 }
             },
             {'data': [
@@ -82,7 +85,8 @@ def dataoverview():
             ],
 
             'layout': {
-                'title': 'Patients by Body Type'
+                'title': 'Patients by Body Type',
+                'paper_bgcolor' : '#EFE6DD'
                 }
             },
             {'data': [
@@ -94,7 +98,8 @@ def dataoverview():
             ],
 
             'layout': {
-                'title': 'Patients by Stroke'
+                'title': 'Patients by Stroke',
+                'paper_bgcolor' : '#EFE6DD'
                 }
             }
 
