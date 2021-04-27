@@ -17,16 +17,9 @@
         
         <!-- Data Overview Graphs -->
         <center><h3 style="font-family:noto-sans;font-size:36px;">Data Overview</h3></center>
-        <div class="page-row">
-            <div class="column">
-                <div id="{{0}}"></div>
-                <div id="{{1}}"></div>
-            </div>
-            <div class="column">
-                <div id="{{2}}"></div>
-                <div id="{{3}}"></div>
-            </div>
-        </div>
+        {% for id in ids %}
+            <div id="{{id}}"></div>
+        {% endfor %}
         
         <script type="text/javascript">
             const graphs = {{graphJSON | safe}};
