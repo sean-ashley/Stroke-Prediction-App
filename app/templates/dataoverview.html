@@ -19,17 +19,16 @@
         
         <!-- Data Overview Graphs -->
         <center><h3 style="font-family:noto-sans;font-size:36px;">Data Overview</h3></center>
-        <div class="container">
-    {% block content %}
-        <div class="page-header">
-            <h1 class="text-center ex1">Overview of Training Dataset</h1>
+        <div class="page-row">
+            <div class="column">
+                <div id="{{0}}"></div>
+                <div id="{{1}}"></div>
+            </div>
+            <div class="column">
+                <div id="{{2}}"></div>
+                <div id="{{3}}"></div>
+            </div>
         </div>
-    {% endblock %}
-
-    {% for id in ids %}
-        <div id="{{id}}"></div>
-    {% endfor %}
-    </div>
 
     <script type="text/javascript">
         const graphs = {{graphJSON | safe}};
