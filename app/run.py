@@ -8,6 +8,7 @@ from predict import build_df,predict
 from waitress import serve
 import joblib
 import json
+from plotly.graph_objs.pie import Marker
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///../data/graphdata.db')
@@ -39,7 +40,8 @@ def dataoverview():
             'data': [
                 Pie(
                     labels= pre_existing["pre_condition"],
-                    values = pre_existing["id"]
+                    values = pre_existing["id"],
+                    marker= Marker(colors = ["#E29D57","#698996","#8B633A","#405660"] )
                 )
             ],
 
@@ -50,7 +52,8 @@ def dataoverview():
         {'data': [
                 Pie(
                     labels= genders["gender"],
-                    values = genders["id"]
+                    values = genders["id"],
+                    marker= Marker(colors = ["#E29D57","#698996","#8B633A","#405660"] )
                 )
             ],
 
@@ -61,7 +64,8 @@ def dataoverview():
             {'data': [
                 Pie(
                     labels= diabetes["is_user_diabetic"],
-                    values = diabetes["id"]
+                    values = diabetes["id"],
+                    marker= Marker(colors = ["#E29D57","#698996","#8B633A","#405660"] )
                 )
             ],
 
@@ -72,7 +76,8 @@ def dataoverview():
             {'data': [
                 Pie(
                     labels= body_types["body_type"],
-                    values = body_types["id"]
+                    values = body_types["id"],
+                    marker= Marker(colors = ["#E29D57","#698996","#8B633A","#405660"] )
                 )
             ],
 
@@ -83,7 +88,8 @@ def dataoverview():
             {'data': [
                 Pie(
                     labels= strokes["stroke"],
-                    values = strokes["id"]
+                    values = strokes["id"],
+                    marker= Marker(colors = ["#E29D57","#698996","#8B633A","#405660"] )
                 )
             ],
 
