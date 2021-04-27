@@ -1,176 +1,117 @@
-<html>
-    
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Stroke Test</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <div class="topnav">
-            <a class="active" href="/dataoverview">Data Overview</a>
-            <a href="https://www.linkedin.com/in/sean-ashley/">LinkedIn</a>
-            <a href="https://github.com/sean-ashley">GitHub</a>
-            <a href="mailto:sean.d.ashley@gmail.com">Email</a>
-        </div>
+<html lang="eng">
+    <header>
+        <title>Prediction Form</title>
+        <link rel="stylesheet" href="styleSheet.css">
+    </header>
+    <body style="background-color:#EFE6DD">
+        <nav>
+            <ul class="navigation" style="background:#C59E77">
+                <li><a href="dataoverview.html" style="color:#FFFFFF">Data Overview</a></li>
+                <li><a href="https://www.linkedin.com/in/sean-ashley/" target="_blank" style="color:#FFFFFF"><img src="linkedIn.png" height="30px"></a></li>
+                <li><a href="https://github.com/sean-ashley" target="_blank" style="color:#FFFFFF"><img src="github.png" height="30px"></a></li>
+                <li><a href="mailto:sean.d.ashley@gmail.com" target="_blank" style="color:#FFFFFF">Email</a></li>
+                <li><a href="https://sean-ashley.medium.com/can-ai-predict-your-stroke-before-it-happens-feec17f12145" target="_blank" style="color:#FFFFFF">Article</a></li>
+            </ul>
+        </nav>
         
         <form>
-            <div class="container">
-                <h1>Stroke Prediction Form</h1>
-                <p>Fill in this form to check whether you may be at risk of getting a stroke</p>
-                <hr>
-                
-                <label for="gender"><b><u>GENDER</u></b></label>
-                <br>
-                <select name="gender" id="gender" required>
-                    <option disabled selected value>-- Select --</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-                <br>
-                <br>
+            <div class="page-row">
+                <div class="column">
+                    <h3>Gender</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="male" value="Male" name="gender" required><label for="male">Male</label><input type="radio" id="female" value="Female" name="gender" required><label for="female">Female</label><input type="radio" id="other" value="Other" name="gender" required><label for="other">Other</label>
+                        </div>
+                    </div>
 
-                <label for="age"><b><u>AGE</u></b></label>
-                <br>
-                <input type="number" min="0" max="130" placeholder="Age" name="age" id="age" required>
-                <br>
-                <br>
+                    <h3>Age</h3>
+                    <div class="small-row">
+                        <input type="number" min="0" max="130" placeholder="Age" name="age" id="age" class="text-input" step="1" required>
+                    </div>
 
-                <label for="hypertension"><b><u>DO YOU HAVE HYPERTENSION?</u></b></label>
-                <br>
-                <input type="radio" name="hypertension" id="hyp-true" value=1 required>
-                <label for="hyp-true">Yes</label>
-                <br>
-                <input type="radio" name="hypertension" id="hyp-false" value=0 required>
-                <label for="hyp-false">No</label>
-                <br>
-                <br>
+                    <h3>Hypertension</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="hyp-true" value="1" name="hypertension" required><label for="hyp-true">Yes</label><input type="radio" id="hyp-false" value="0" name="hypertension" required><label for="hyp-false">No</label>
+                        </div>
+                    </div>
 
-                <label for="heart-disease"><b><u>DO YOU HAVE HEART DISEASE?</u></b></label>
-                <br>
-                <input type="radio" name="heart-disease" id="heart-true" value=1 required>
-                <label for="heart-true">Yes</label>
-                <br>
-                <input type="radio" name="heart-disease" id="heart-false" value=0 required>
-                <label for="heart-false">No</label>
-                <br>
-                <br>
+                    <h3>Heart Disease</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="heart-true" value="1" name="heart-disease" required><label for="heart-true">Yes</label><input type="radio" id="heart-false" value="0" name="heart-disease" required><label for="heart-false">No</label>
+                        </div>
+                    </div>
+                </div>
 
-                <label for="diabetes"><b><u>DO YOU HAVE DIABETES?</u></b></label>
-                <br>
-                <input type="radio" name="diabetes" id="diabetes-true" value=1 required>
-                <label for="heart-true">Yes</label>
-                <br>
-                <input type="radio" name="diabetes" id="diabetes-false" value=0 required>
-                <label for="heart-false">No</label>
-                <br>
-                <br>
+                <div class="column">
+                    <h3>Diabetes</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="diabetes-true" value="1" name="diabetes" required><label for="diabetes-true">Yes</label><input type="radio" id="diabetes-false" value="0" name="diabetes" required><label for="diabetes-false">No</label>
+                        </div>
+                    </div>
 
-                <label for="marital-status"><b><u>MARITAL STATUS</u></b></label>
-                <br>
-                <input type="radio" name="marriage" id="marriage-true" value="Yes" required>
-                <label for="marriage-true">Married/Previously Married</label>
-                <br>
-                <input type="radio" name="marriage" id="marriage-false" value="No" required>
-                <label for="marriage-false">Never Married</label>
-                <br>
-                <br>
+                    <h3>Marital Status</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="marriage-true" value="1" name="marriage" required><label for="marriage-true">Married/Previously Married</label><input type="radio" id="marriage-false" value="0" name="marriage" required><label for="marriage-false">Never Married</label>
+                        </div>
+                    </div>
 
-                <label for="work"><b><u>WORK ENVIRONMENT</u></b></label>
-                <br>
-                <select name="work" id="work" required>
-                    <option disabled selected value>-- Select --</option>
-                    <option value="Private">Private</option>
-                    <option value="Self-employed">Self-Employed</option>
-                    <option value="Govt_job">Government Job</option>
-                    <option value="Never_worked">Never Worked</option>
-                    <option value='children'>I'm a Child</option>
-                </select>
-                <br>
-                <br>
+                    <h3>Work Environment</h3>
+                    <div class="small-row">
+                        <select name="work" id="work" class="dropdown-list" required>
+                            <option disabled selected value>-- Select --</option>
+                            <option value="Private">Private</option>
+                            <option value="Self-employed">Self-Employed</option>
+                            <option value="Govt_job">Government Job</option>
+                            <option value="Never_worked">Never Worked</option>
+                            <option value='children'>I'm a Child</option>
+                        </select>
+                    </div>
 
-                <label for="environment"><b><u>RESIDENTIAL ENVIRONMENT</u></b></label>
-                <br>
-                <input type="radio" name="environment" id="rural" value="rural" required>
-                <label for="Rural">Rural</label>
-                <br>
-                <input type="radio" name="environment" id="urban" value="urban" required>
-                <label for="Urban">Urban</label>
-                <br>
-                <br>
+                    <h3>Residential Environment</h3>
+                    <div class="small-row">
+                        <div class="radio-group">
+                            <input type="radio" id="rural" value="1" name="environment" required><label for="rural">Rural</label><input type="radio" id="urban" value="0" name="environment" required><label for="urban">Urban</label>
+                        </div>
+                    </div>
+                </div>
 
-                <label><b><u>HEIGHT (ft)</u></b></label>
-                <br>
-                <input type="number" min="0" max="12" placeholder="Feet" name="feet" id="feet" step=".01" required>
-                <br>
-                <input type="number" min="0" max="11.99" placeholder="Inches" name="inches" id="inches" step=".01" required>
-                <br>
-                <br>
+                <div class="column">
+                    <h3>Height</h3>
+                    <div class="small-row">
+                        <input type="number" min="0" max="12" placeholder="Feet" name="feet" id="feet" class="text-input" step="0.1" required>
+                        <input type="number" min="0" max="11.99" placeholder="Inches" name="inches" id="inches" class="text-input" step="0.1" required>
+                    </div>
 
-                <label for="weight"><b><u>WEIGHT (lbs)</u></b></label>
-                <br>
-                <input type="number" min="0" max="1000" placeholder="Enter Weight" name="weight" id="weight" step=".01" required>
-                <br>
-                <br>
+                    <h3>Weight</h3>
+                    <div class="small-row">
+                        <input type="number" min="0" max="1000" placeholder="Weight" name="weight" id="weight" class="text-input" step="0.1" required>
+                    </div>
 
-                <label for="smoking"><b><u>SMOKED OR PREVIOUSLY SMOKED?</u></b></label>
-                <br>
-                <select name="smoke" id="smoke" required>
-                    <option disabled selected value>-- Select --</option>
-                    <option value='smokes'>Smoker</option>
-                    <option value='formerly smoked'>Previous Smoker</option>
-                    <option value='never smoked'>Never Smoked</option>
-                </select>
-                <br>
-                <br>
-
-                <hr>
-                
-                <button type="submit" class="registerbtn">Submit Responses</button>
+                    <h3>Smoking Habits</h3>
+                    <div class="small-row">
+                        <select name="smoke" id="smoke" class="dropdown-list" required>
+                            <option disabled selected value>-- Select --</option>
+                            <option value="smokes">Smoker</option>
+                            <option value="formerly smoked">Previous Smoker</option>
+                            <option value="never smoked">Never Smoked</option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="small-row">
+                        <button type="submit" class="button-submit">Submit Responses</button>
+                    </div>
+                </div>
             </div>
-        
         </form>
+
     </body>
-
-    <script>
-        function formResults(){
-            var gender, age, hypertension, heartDisease, diabetes, marriage, work, environment, diabetes, feet, inches, weight, smoke;
-            gender = document.getElementById("gender").value;
-            age = document.getElementById("age").value;
-            hypertension = document.getElementByName("hypertension").value;
-            heartDisease = document.getElementByName("heart-disease").value;
-            diabetes = document.getElementByName("diabetes").value;
-            marriage = document.getElementByName("marriage").value;
-            work = document.getElementById("work").value;
-            environment = document.getElementById("environment").value;
-            diabetes = document.getElementById("diabetes").value;
-            feet = document.getElementById("feet").value;
-            inches = document.getElementById("inches").value;
-            weight = document.getElementById("weight").value;
-            smoke = document.getElementById("smoke").value;
-        }
-    </script>
-    <style>
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        .topnav a {
-            float: left;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .topnav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-    </style>
 </html>
