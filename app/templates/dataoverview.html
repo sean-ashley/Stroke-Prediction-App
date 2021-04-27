@@ -17,16 +17,24 @@
         
         <!-- Data Overview Graphs -->
         <center><h3 style="font-family:noto-sans;font-size:36px;">Data Overview</h3></center>
-        {% for id in ids %}
-            <div id="{{id}}"></div>
-        {% endfor %}
-        
-        <script type="text/javascript">
-            const graphs = {{graphJSON | safe}};
-            const ids = {{ids | safe}};
-            for(let i in graphs) {
-                Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
-            }
-        </script>
+        <div class="container">
+    {% block content %}
+        <div class="page-header">
+            <h1 class="text-center ex1">Overview of Training Dataset</h1>
+        </div>
+    {% endblock %}
+
+    {% for id in ids %}
+        <div id="{{id}}"></div>
+    {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+        const graphs = {{graphJSON | safe}};
+        const ids = {{ids | safe}};
+        for(let i in graphs) {
+            Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+        }
+    </script>
         
 </html>
