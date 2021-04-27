@@ -1,0 +1,283 @@
+/* Imports Noto Sans Font */
+@font-face{
+    font-family:"noto-sans";
+    src: url("NotoSans-Bold.ttf");
+}
+
+/* Sets footer settings for medical-related pages */
+footer {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	color: black;
+	text-align: center;
+    font-family: "noto-sans";
+}
+
+/* Navigation bar styling */
+.navigation {
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0; 
+    background:#121113;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.30);
+    width:90%;
+    margin-inline-start: 5%;
+  }
+.navigation a {
+    text-decoration: none;
+    display: block;
+    padding:15px;
+    color: #EFE6DD;
+    border-radius: 20px;
+    font-weight:bold;
+    font-size:24px;
+    font-family:"noto-sans"
+}
+.navigation li{
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.navigation a:hover {
+    background: #698996;
+    border-radius: 20px;
+    transition-duration: 0.5s;
+    color:#343036;
+}
+
+/* Positive results styling */
+.results-box-positive{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #C62C36;
+    border-radius: 20px;
+    width:80%;
+    margin-inline-start: 10%;
+}
+.results-box-positive h1{
+    color:#EFE6DD;
+    font-size:50px;
+    font-family:"noto-sans";
+    text-align:center;
+}
+.results-box-positive h3{
+    color:#EFE6DD;
+    font-size:30px;
+    font-family:"noto-sans";
+    text-align:center;
+}
+.boxes-positive{
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0; 
+    justify-content:center;
+}
+.boxes-positive a{
+    background: #EFE6DD;
+    text-decoration: none;
+    display: block;
+    padding:15px;
+    color: #C62C36;
+    border-radius: 20px;
+    font-weight:bold;
+    font-size:36px;
+    font-family:"noto-sans";
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.30);
+}
+.boxes-positive li{
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:20px;
+    padding-bottom:50px;
+}
+.boxes-positive a:hover {
+    border-radius: 20px;
+    transition-duration: 0.5s;
+    background: #ebbcbf;
+}
+
+/* Negative results styling */
+.results-box-negative{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #4FB42B;
+    border-radius: 20px;
+    width:80%;
+    margin-inline-start: 10%;
+}
+.results-box-negative h1{
+    color:#EFE6DD;
+    font-size:50px;
+    font-family:"noto-sans";
+    text-align:center;
+}
+.results-box-negative h3{
+    color:#EFE6DD;
+    font-size:30px;
+    font-family:"noto-sans";
+    text-align:center;
+}
+.boxes-negative{
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0; 
+    justify-content:center;
+}
+.boxes-negative a{
+    background: #EFE6DD;
+    text-decoration: none;
+    display: block;
+    padding:15px;
+    color: #4FB42B;
+    border-radius: 20px;
+    font-weight:bold;
+    font-size:36px;
+    font-family:"noto-sans";
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.30);
+}
+.boxes-negative li{
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:20px;
+    padding-bottom:50px;
+}
+.boxes-negative a:hover {
+    border-radius: 20px;
+    transition-duration: 0.5s;
+    background: #bde2af;
+}
+
+/* Radio 'sliders' (fancier radio buttons) */
+input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+label {
+    color: #000000;
+    display: inline-block;
+    cursor: pointer;
+    font-family:"noto-sans";
+    font-size:24px;
+    padding: 10px;
+}
+input[type=radio]:hover + label{
+    color: #000000;
+    background: #839fac;
+    border-radius: 20px;
+}
+input[type=radio]:checked + label {
+    color: #000000;
+    background: #A9C3CE;
+    border-radius: 20px;
+}
+.radio-group {
+    border: solid 10px #698996;
+    background: #698996;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Standardize text for form */
+form h3{
+    font-family: "noto-sans";
+    font-size: 36px;
+}
+
+/* Styled text input */
+.text-input ::placeholder{
+    text-align:center;
+    padding:10px;
+    font-family:"noto-sans";
+    font-size: 24;
+    color:#B4B4B4;
+    border-color:transparent;
+}
+.text-input{
+    border-radius:20px;
+    border-color:transparent;
+    outline-width: 0;
+    padding:10px;
+    text-align:center;
+    font-family:"noto-sans";
+    font-size: 24;
+}
+
+/* Seperate page into columns */
+.column{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    flex-shrink:1;
+}
+
+/* Each column on page is grouped into one large row SET MEDIA SETTINGS @media only screen and (max-width:)*/
+@media only screen and (min-width: 1180px){
+    .page-row{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-evenly;
+    }
+}
+
+@media only screen and (max-width: 1180px){
+    .page-row{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-evenly;
+    }
+}
+
+
+/* Dropdown list styling (multi-select) */
+.dropdown-list{
+    border-radius:20px;
+    border-color:transparent;
+    outline-width:0;
+    padding:10px;
+    text-align:center;
+    font-family:"noto-sans";
+    font-size: 24;
+}
+
+/* Small row exclusively for feet/inches measurements */
+@media only screen and (min-width: 1180px){
+    .small-row{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+    }
+}
+
+@media only screen and (max-width: 1180px){
+    .small-row{
+        display:flex;
+        flex-direction:row;
+        justify-content:flex-start;
+    }
+}
+
+/* Submit button styling */
+.button-submit{
+    background: #A9C3CE;
+    border-radius:20px;
+    border-color:transparent;
+    outline-width: 0;
+    padding:10px;
+    text-align:center;
+    font-family:"noto-sans";
+    font-size: 24;
+}
+.button-submit:hover{
+    background: #698996;
+    transition-duration:0.5s;
+}
