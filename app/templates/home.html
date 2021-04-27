@@ -13,7 +13,7 @@
                 <li><a href="https://sean-ashley.medium.com/can-ai-predict-your-stroke-before-it-happens-feec17f12145" target="_blank" style="color:#FFFFFF">Article</a></li>
             </ul>
         </nav>
-        
+
         <form>
             <div class="page-row">
                 <div class="column">
@@ -107,11 +107,42 @@
                     <br>
                     <br>
                     <div class="small-row">
-                        <button type="submit" class="button-submit">Submit Responses</button>
+                        <button type="submit" class="button-submit" onclick="formResults();">Submit Responses</button>
                     </div>
                 </div>
             </div>
         </form>
 
     </body>
+
+    <script>
+        function formResults(){
+            var gender, age, hypertension, heartDisease, diabetes, marriage, work, environment, diabetes, height, weight, smoke;
+            gender = document.getElementById("gender").value;
+            age = document.getElementById("age").value;
+            hypertension = document.getElementByName("hypertension").value;
+            heartDisease = document.getElementByName("heart-disease").value;
+            diabetes = document.getElementByName("diabetes").value;
+            marriage = document.getElementByName("marriage").value;
+            work = document.getElementById("work").value;
+            environment = document.getElementById("environment").value;
+            diabetes = document.getElementById("diabetes").value;
+            height = document.getElementById("height").value;
+            weight = document.getElementById("weight").value;
+            smoke = document.getElementById("smoke").value;
+            
+            document.write(gender);
+            document.write(age);
+            document.write(hypertension);
+            document.write(heartDisease);
+            document.write(diabetes);
+            document.write(marriage);
+            document.write(work);
+            document.write(environment);
+            document.write(diabetes);
+            document.write(height);
+            document.write(weight);
+            document.write(smoke);
+        }
+    </script>
 </html>
