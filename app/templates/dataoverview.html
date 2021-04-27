@@ -19,12 +19,21 @@
         <center><h3 style="font-family:noto-sans;font-size:36px;">Data Overview</h3></center>
         <div class="page-row">
             <div class="column">
-                <!-- GRAPH 1 GOES HERE -->
-                <!-- GRAPH 2 GOES HERE -->
+                <div id="{{0}}"></div>
+                <div id="{{1}}"></div>
             </div>
             <div class="column">
-                <!-- GRAPH 3 GOES HERE -->
-                <!-- GRAPH 4 GOES HERE -->
+                <div id="{{2}}"></div>
+                <div id="{{3}}"></div>
             </div>
         </div>
+        
+        <script type="text/javascript">
+            const graphs = {{graphJSON | safe}};
+            const ids = {{ids | safe}};
+            for(let i in graphs) {
+                Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+            }
+        </script>
+        
 </html>
