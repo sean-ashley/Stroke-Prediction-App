@@ -31,7 +31,7 @@ The web app was deployed using Docker and Azure.
 
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/) - The web framework used
 * [Sci-kit Learn](https://scikit-learn.org/stable/) - Tool used to help pre-process data
-* [XGBoost](https://xgboost.readthedocs.io/en/latest/) - Model usedp
+* [XGBoost](https://xgboost.readthedocs.io/en/latest/) - Model used
 * [Pandas](https://pandas.pydata.org/sq) - Library used for data manipulation
 * [SQLAlchemy](https://www.sqlalchemy.org/) - Library used to create SQLite database
 * [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/) - Library used to serve website
