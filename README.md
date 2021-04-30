@@ -110,4 +110,4 @@ This project is licensed under the Apache License - see the [LICENSE](LICENSE) f
 * [Kaggle Stroke Data Set](https://www.kaggle.com/fedesoriano/stroke-prediction-dataset?rvi=1)
 * [Udacity](https://www.udacity.com/)
 
-This was done as my capstone project for the Udacity Data Science Nanodegree, I chose the subject and just had to hit certain criteria. 
+This was done as my capstone project for the Udacity Data Science Nanodegree 
