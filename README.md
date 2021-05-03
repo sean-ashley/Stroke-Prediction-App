@@ -100,7 +100,8 @@ That's a future I want, one where preventable deaths are prevented.
 
 ## Authors
 
-* **Sean Ashley** - *Initial work* - [sean-ashley](https://github.com/sean-ashley)
+* **Sean Ashley** - *Backend, Deployment, ML, and Data Science Work* - [sean-ashley](https://github.com/sean-ashley)
+* **Hannah Hepburn** - *Frontend* - [HMHepburn](https://github.com/HMHepburn)
 
 ## License
 
