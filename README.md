@@ -14,8 +14,8 @@ That question was my inspiration to building a Stroke Predictor using the Stroke
 
 To run this project locally follow these steps:
 
-* 1. Pull the docker image to your local machine using this command ```docker pull seanashley/strokepredictor:1.4```
-* 2. Run the docker container on your local machine using this command ```docker run -d -p 5000:5000 seanashley/strokepredictor:1.93```
+* 1. Pull the docker image to your local machine using this command ```docker pull seanashley/strokepredictor:2.4```
+* 2. Run the docker container on your local machine using this command ```docker run -d -p 5000:5000 seanashley/strokepredictor:2.4```
 * 3. Enter 0.0.0.0:5000 into your browser, and enter your information on the home page.
 * 4. See the predictors results!
 
