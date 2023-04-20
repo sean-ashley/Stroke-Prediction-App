@@ -20,7 +20,7 @@ To run this project locally follow these steps:
 * 4. See the predictors results!
 
 Alternative:
-Visit the hosted website [here](https://stroke-predictor.azurewebsites.net)
+Visit the hosted website [here](https://strokepredictor.azurewebsites.net)
 
 
 ## Deployment
